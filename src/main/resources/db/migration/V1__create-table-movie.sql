@@ -1,0 +1,7 @@
+CREATE TABLE movie (
+
+    id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    rating DOUBLE NOT NULL
+
+);
