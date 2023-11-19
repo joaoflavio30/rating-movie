@@ -9,7 +9,6 @@ import lombok.*;
 @Table(name = "movie")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Movie {
 
     @Id
@@ -18,8 +17,4 @@ public class Movie {
     private String name;
     private Double rating;
 
-    public Movie(String name, Double rating) {
-        this.name = name;
-        this.rating = rating;
-    }
 }

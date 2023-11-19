@@ -3,7 +3,6 @@ package com.joaoflaviofreitas.openlabsdemo.controller;
 import com.joaoflaviofreitas.openlabsdemo.model.Movie;
 import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
 import com.joaoflaviofreitas.openlabsdemo.service.MovieService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/movies")
