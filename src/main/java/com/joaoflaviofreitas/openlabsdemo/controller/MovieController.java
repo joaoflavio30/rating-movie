@@ -1,43 +1,20 @@
 package com.joaoflaviofreitas.openlabsdemo.controller;
 
 import com.joaoflaviofreitas.openlabsdemo.model.Movie;
-import com.joaoflaviofreitas.openlabsdemo.service.MovieService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/movies")
-@AllArgsConstructor
-public class MovieController {
+public interface MovieController {
 
-    @Autowired
-    private MovieService movieService;
+    public ResponseEntity<Movie> insertMovie(Movie movie);
 
-    @PostMapping
-    public Movie insertMovie(@RequestBody Movie movie) {
-        return movieService.insertMovie(movie);
-    }
+    public ResponseEntity<List<Movie>> getMovies();
 
-    @GetMapping
-    public List<Movie> getAllMovies() {
-        return movieService.getMovies();
-    }
+    public ResponseEntity<Movie> getMovieById(Integer id);
 
-    @GetMapping("/{id}")
-    public Movie getMovieById(@PathVariable("id") Integer id) {
-        return movieService.getMovieById(id);
-    }
+    public ResponseEntity<Movie> updateMovie(MovieDto newMovie, Integer id);
 
-    @PutMapping("/{id}")
-    public Movie updateMovie(@RequestBody Movie movie) {
-        return movieService.updateMovie(movie);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteMovie(@PathVariable("id") Integer id) {
-        movieService.deleteMovie(id);
-    }
+    public void deleteMovie(Integer id);
 }

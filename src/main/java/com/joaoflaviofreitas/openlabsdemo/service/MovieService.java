@@ -1,8 +1,10 @@
 package com.joaoflaviofreitas.openlabsdemo.service;
 
 import com.joaoflaviofreitas.openlabsdemo.model.Movie;
+import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MovieService {
 
@@ -12,7 +14,7 @@ public interface MovieService {
 
     Movie getMovieById(Integer id);
 
-    Movie updateMovie(Movie movie);
+    Movie updateMovie(MovieDto newMovie, Integer id);
 
     void deleteMovie(Integer id);
 }

@@ -2,10 +2,12 @@ package com.joaoflaviofreitas.openlabsdemo.service;
 
 import com.joaoflaviofreitas.openlabsdemo.data.MovieRepository;
 import com.joaoflaviofreitas.openlabsdemo.model.Movie;
+import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +35,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie updateMovie(Movie movie) {
-        return movieRepository.save(movie);
+    public Movie updateMovie(MovieDto newMovie, Integer id) {
+        Movie originalMovie = movieRepository.findById(id)
+                .orElseThrow( () -> new EntityNotFoundException("Movie not found"));
+        BeanUtils.copyProperties(newMovie,originalMovie);
+        movieRepository.save(originalMovie);
+        return originalMovie;
     }
 
     @Override

@@ -1,13 +1,15 @@
 package com.joaoflaviofreitas.openlabsdemo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Entity
+@Getter
+@Setter
+@Entity(name = "movie")
 @Table(name = "movie")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Movie {
 
     @Id
