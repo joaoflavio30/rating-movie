@@ -4,7 +4,6 @@ import com.joaoflaviofreitas.openlabsdemo.model.Movie;
 import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MovieService {
 
@@ -12,7 +11,7 @@ public interface MovieService {
 
     List<Movie> getMovies();
 
-    Movie getMovieById(Integer id);
+    Movie  getMovieById(Integer id);
 
     Movie updateMovie(MovieDto newMovie, Integer id);
 

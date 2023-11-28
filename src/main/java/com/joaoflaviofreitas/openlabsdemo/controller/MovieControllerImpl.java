@@ -22,6 +22,7 @@ public class MovieControllerImpl implements MovieController {
 
     @Override
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Movie> insertMovie(@RequestBody Movie movie) {
         return ResponseEntity.status(HttpStatus.OK).body(movieService.insertMovie(movie));
     }
@@ -35,7 +36,7 @@ public class MovieControllerImpl implements MovieController {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(movieService.getMovieById(id));
+        return ResponseEntity.ok(movieService.getMovieById(id));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class MovieControllerImpl implements MovieController {
 
     @Override
     @DeleteMapping("/{id}")
-    public void deleteMovie(@PathVariable("id") Integer id) {
+    public void deleteMovie(@PathVariable("id") Integer id){
         movieService.deleteMovie(id);
     }
 }
