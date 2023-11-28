@@ -4,15 +4,11 @@ import com.joaoflaviofreitas.openlabsdemo.data.MovieRepository;
 import com.joaoflaviofreitas.openlabsdemo.exception.MovieNotFoundException;
 import com.joaoflaviofreitas.openlabsdemo.model.Movie;
 import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -52,7 +48,7 @@ class MovieServiceTest {
         Movie movie1 = new Movie(1,"Spider-Man",10.0);
         Movie movie2 = new Movie(2,"Spider-Man 2",8.0);
         Movie movie3 = new Movie(3,"Spider-Man 3",9.0);
-        List<Movie> myList = new ArrayList<Movie>();
+        List<Movie> myList = new ArrayList<>();
         myList.add(movie1);
         myList.add(movie2);
         myList.add(movie3);
@@ -81,7 +77,6 @@ class MovieServiceTest {
     @Test
     void whenGetMovieById_shouldReturnException() throws MovieNotFoundException {
         when(movieRepository.findById(2)).thenReturn(Optional.empty());
-
 
         MovieNotFoundException thrown = assertThrows(MovieNotFoundException.class, () -> movieService.getMovieById(2));
 
@@ -134,17 +129,12 @@ class MovieServiceTest {
 
     @Test
     void whenDeleteMovie_shouldReturnException() throws MovieNotFoundException {
-
-
         when(movieRepository.findById(1)).thenReturn(Optional.empty());
         doNothing().when(movieRepository).deleteById(1);
-
-
 
         MovieNotFoundException thrown = assertThrows(MovieNotFoundException.class, () -> movieService.deleteMovie(1));
 
         assertEquals("Movie not found with the given ID.", thrown.getMessage());
         // there is no 'verify' because before deleteById is called the exception is thrown
     }
-
 }
