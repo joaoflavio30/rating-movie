@@ -24,7 +24,7 @@ public class MovieControllerImpl implements MovieController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Movie> insertMovie(@RequestBody Movie movie) {
-        return ResponseEntity.status(HttpStatus.OK).body(movieService.insertMovie(movie));
+        return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movie));
     }
 
     @Override
