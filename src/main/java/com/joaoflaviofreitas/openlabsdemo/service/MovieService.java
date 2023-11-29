@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface MovieService {
 
-    Movie insertMovie(Movie movie);
+    void insertMovie(MovieDto movieDto);
 
     List<Movie> getMovies();
 
     Movie  getMovieById(Integer id);
 
-    Movie updateMovie(MovieDto newMovie, Integer id);
+    void updateMovie(MovieDto newMovie, Integer id);
 
     void deleteMovie(Integer id);
 }

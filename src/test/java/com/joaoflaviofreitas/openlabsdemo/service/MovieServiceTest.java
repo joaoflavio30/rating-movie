@@ -34,14 +34,17 @@ class MovieServiceTest {
 
     @Test
     void whenInsertMovie_shouldReturnMovie() {
-        Movie movie = new Movie(1,"Spider-Man",10.0);
+        MovieDto movieDto = new MovieDto("Spider-Man", 10.0);
+        Movie movieToSave = new Movie();
+        movieToSave.setName(movieDto.name());
+        movieToSave.setRating(movieDto.rating());
 
-        when(movieRepository.save(any())).thenReturn(movie);
+        when(movieRepository.save(any(Movie.class))).thenReturn(movieToSave);
 
-        Movie insertedMovie = movieService.insertMovie(movie);
+        movieService.insertMovie(movieDto);
 
-        assertThat(insertedMovie.getName()).isSameAs(movie.getName());
-        verify(movieRepository).save(movie);
+        // Here i use 'times()' because i instantiate a different Movie
+        verify(movieRepository, times(1)).save(any(Movie.class));
     }
     @Test
     void whenGetMovies_shouldReturnMovies(){
@@ -86,19 +89,17 @@ class MovieServiceTest {
 
     @Test
     void whenUpdateMovie_shouldReturnUpdatedMovie(){
-        Movie oldMovie = new Movie(1,"Spider-Man",10.0);
-        MovieDto newMovieDto = new MovieDto("Spider-Man 2",8.0);
-        Movie newMovie = new Movie(oldMovie.getId(),"Spider-Man 2",8.0);
+        Movie originalMovie = new Movie(1,"Spider-Man",10.0);
+        MovieDto movieDto = new MovieDto("Spider-Man 2",8.0);
 
-        when(movieRepository.findById(oldMovie.getId())).thenReturn(Optional.of(oldMovie));
-        when(movieRepository.save(any())).thenReturn(newMovie);
+        when(movieRepository.findById(originalMovie.getId())).thenReturn(Optional.of(originalMovie));
+        when(movieRepository.save(any())).thenReturn(originalMovie);
 
-        Movie result = movieService.updateMovie(newMovieDto, oldMovie.getId());
+        movieService.updateMovie(movieDto, originalMovie.getId());
 
-        assertThat(result.getName()).isSameAs(newMovieDto.name());
-        assertThat(result.getRating()).isSameAs(newMovieDto.rating());
-        verify(movieRepository).findById(oldMovie.getId());
-        verify(movieRepository).save(result);
+        verify(movieRepository).findById(originalMovie.getId());
+        verify(movieRepository).save(originalMovie);
+        assertEquals(originalMovie.getRating(),movieDto.rating());
     }
 
     @Test

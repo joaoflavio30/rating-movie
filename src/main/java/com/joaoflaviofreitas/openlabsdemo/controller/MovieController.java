@@ -2,19 +2,22 @@ package com.joaoflaviofreitas.openlabsdemo.controller;
 
 import com.joaoflaviofreitas.openlabsdemo.model.Movie;
 import com.joaoflaviofreitas.openlabsdemo.model.MovieDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
+@Validated
 public interface MovieController {
 
-    public ResponseEntity<Movie> insertMovie(Movie movie);
+    ResponseEntity<Void> insertMovie(@Valid MovieDto movieDto);
 
-    public ResponseEntity<List<Movie>> getMovies();
+    ResponseEntity<List<Movie>> getMovies();
 
-    public ResponseEntity<Movie> getMovieById(Integer id);
+    ResponseEntity<Movie> getMovieById(Integer id);
 
-    public ResponseEntity<Movie> updateMovie(MovieDto newMovie, Integer id);
+    ResponseEntity<Void> updateMovie(@Valid MovieDto newMovie, Integer id);
 
-    public void deleteMovie(Integer id);
+    void deleteMovie(Integer id);
 }

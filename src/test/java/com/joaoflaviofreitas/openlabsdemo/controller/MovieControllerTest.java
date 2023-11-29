@@ -16,8 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -37,15 +38,12 @@ class MovieControllerTest {
     private ObjectMapper objectMapper;
     @Test
     public void whenInsertMovie_shouldReturnMovie() throws Exception{
-        Movie movie = new Movie(1,"Spider-Man", 10.0);
+        MovieDto movieDto = new MovieDto("Spider-Man", 10.0);
 
-        when(movieService.insertMovie(any())).thenReturn(movie);
+        doNothing().when(movieService).insertMovie(movieDto);
 
-        mockMvc.perform(post("/movies").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(movie)))
+        mockMvc.perform(post("/movies").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(movieDto)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(movie.getId()))
-                .andExpect(jsonPath("$.name").value(movie.getName()))
-                .andExpect(jsonPath("$.rating").value(movie.getRating()))
                 .andDo(print());
     }
 
@@ -102,19 +100,15 @@ class MovieControllerTest {
     }
 
     @Test
-    void whenUpdateMovie_shouldReturnUpdatedMovie() throws Exception{
-        Movie oldMovie = new Movie(1,"Spider-Man",10.0);
-        MovieDto newMovieDto = new MovieDto("Spider-Man 2",8.0);
-        Movie newMovie = new Movie(oldMovie.getId(),"Spider-Man 2",8.0);
+    void whenUpdateMovie_shouldReturnOkHttpStatus() throws Exception{
+        Movie movie = new Movie(1,"Spider-Man",10.0);
+        MovieDto movieDto = new MovieDto("Spider-Man 2",8.0);
 
-        when(movieService.updateMovie(newMovieDto, oldMovie.getId())).thenReturn(newMovie);
+        doNothing().when(movieService).updateMovie(movieDto, movie.getId());
 
 
-        mockMvc.perform(put("/movies/{id}",oldMovie.getId()).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(newMovie)))
+        mockMvc.perform(put("/movies/{id}",movie.getId()).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(movieDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(newMovie.getId()))
-                .andExpect(jsonPath("$.name").value(newMovie.getName()))
-                .andExpect(jsonPath("$.rating").value(newMovie.getRating()))
                 .andDo(print());
     }
 
@@ -124,7 +118,7 @@ class MovieControllerTest {
         MovieDto movieDto = new MovieDto("Spider-Man 2",9.0);
         Movie newMovie = new Movie(movie.getId(), "Spider-Man 2",9.0);
 
-        when(movieService.updateMovie(movieDto, movie.getId())).thenThrow(MovieNotFoundException.class);
+        doThrow(MovieNotFoundException.class).when(movieService).updateMovie(movieDto, movie.getId());
 
         mockMvc.perform(put("/movies/{id}",movie.getId()).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(newMovie)))
                 .andExpect(status().isNotFound())
