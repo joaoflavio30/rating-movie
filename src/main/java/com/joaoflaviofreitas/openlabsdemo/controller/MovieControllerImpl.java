@@ -30,13 +30,13 @@ public class MovieControllerImpl implements MovieController {
     }
 
     @Override
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Movie>> getMovies() {
         return ResponseEntity.status(HttpStatus.OK).body(movieService.getMovies());
     }
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Movie> getMovieById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(movieService.getMovieById(id));
     }
