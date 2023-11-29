@@ -33,7 +33,7 @@ class MovieServiceTest {
     }
 
     @Test
-    void whenInsertMovie_shouldReturnMovie() {
+    void whenInsertMovie_shouldCallTheSaveMethod() {
         MovieDto movieDto = new MovieDto("Spider-Man", 10.0);
         Movie movieToSave = new Movie();
         movieToSave.setName(movieDto.name());
@@ -88,7 +88,7 @@ class MovieServiceTest {
     }
 
     @Test
-    void whenUpdateMovie_shouldReturnUpdatedMovie(){
+    void whenUpdateMovie_shouldCallTheSaveMethod(){
         Movie originalMovie = new Movie(1,"Spider-Man",10.0);
         MovieDto movieDto = new MovieDto("Spider-Man 2",8.0);
 
@@ -117,7 +117,7 @@ class MovieServiceTest {
     }
 
     @Test
-    void whenDeleteMovie_shouldReturnVoid(){
+    void whenDeleteMovie_shouldReturnTheDeleteMethod(){
         Movie movie = new Movie(1,"Spider-Man",10.0);
 
         when(movieRepository.findById(1)).thenReturn(Optional.of(movie));

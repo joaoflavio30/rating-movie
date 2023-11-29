@@ -37,7 +37,7 @@ class MovieControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Test
-    public void whenInsertMovie_shouldReturnMovie() throws Exception{
+    public void whenInsertMovie_shouldReturnOkHttpStatus() throws Exception{
         MovieDto movieDto = new MovieDto("Spider-Man", 10.0);
 
         doNothing().when(movieService).insertMovie(movieDto);
@@ -126,7 +126,7 @@ class MovieControllerTest {
     }
 
     @Test
-    void whenDeleteMovie_shouldReturnVoid() throws Exception{
+    void whenDeleteMovie_shouldReturnOkHttpStatus() throws Exception{
         Movie movie = new Movie(1,"Spider-Man",10.0);
 
         doNothing().when(movieService).deleteMovie(movie.getId());
